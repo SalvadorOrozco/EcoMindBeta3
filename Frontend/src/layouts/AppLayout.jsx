@@ -10,6 +10,7 @@ const links = [
   { to: '/reports', label: 'Reportes ESG' },
   { to: '/carbon', label: 'Huella de carbono' },
   { to: '/map', label: 'Mapa de sostenibilidad' },
+  { to: '/auto-audit', label: 'Auditoría Automática' },
   { to: '/early-warning', label: 'EarlyWarningESG' },
   { to: '/regulatory-forecast', label: 'Futuro Normativo' },
   { to: '/indicators', label: 'Indicadores ESG' },

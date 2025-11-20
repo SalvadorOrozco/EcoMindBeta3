@@ -160,6 +160,16 @@ export async function runEsgAuditRequest(payload) {
   return data;
 }
 
+export async function runAutoAudit(companyId) {
+  const { data } = await api.post('/audit/run', null, { params: { companyId, mode: 'auto' } });
+  return data;
+}
+
+export async function fetchAuditLogs(params) {
+  const { data } = await api.get('/audit/logs', { params });
+  return data.logs;
+}
+
 export async function fetchAuditRuns(params) {
   const { data } = await api.get('/audit/runs', { params });
   return data.runs;

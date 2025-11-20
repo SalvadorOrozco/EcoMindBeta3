@@ -359,3 +359,20 @@ CREATE TABLE RegulatoryForecasts (
 );
 
 CREATE INDEX IX_RegulatoryForecasts_Company ON RegulatoryForecasts (CompanyId, Category, DateCreated DESC);
+
+-- Auditoría automática de indicadores vs evidencias
+CREATE TABLE AuditLogs (
+  Id INT IDENTITY PRIMARY KEY,
+  CompanyId INT NOT NULL,
+  PlantId INT NULL,
+  IndicatorId INT NULL,
+  IndicatorKey NVARCHAR(150) NULL,
+  Status NVARCHAR(20) NOT NULL,
+  Message NVARCHAR(MAX) NULL,
+  Confidence INT NULL,
+  CreatedAt DATETIME2 NOT NULL DEFAULT SYSDATETIME(),
+  FOREIGN KEY (CompanyId) REFERENCES Empresas(EmpresaID),
+  FOREIGN KEY (PlantId) REFERENCES Plantas(PlantaID)
+);
+
+CREATE INDEX IX_AuditLogs_CompanyPlant ON AuditLogs (CompanyId, ISNULL(PlantId, 0), CreatedAt DESC);

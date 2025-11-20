@@ -19,6 +19,7 @@ import {
   fetchHistoricalIndicators,
   fetchCompanyPlantReport,
   recalculateAlerts,
+  fetchAuditLogs,
 } from '../services/api.js';
 import { useCompany } from '../context/CompanyContext.jsx';
 
@@ -43,6 +44,7 @@ export default function DashboardPage() {
   const [plantError, setPlantError] = useState(null);
   const [auditSnapshot, setAuditSnapshot] = useState({ findings: [], indicatorSeverity: {}, run: null });
   const [highAlerts, setHighAlerts] = useState([]);
+  const [failedAutoAuditLogs, setFailedAutoAuditLogs] = useState([]);
 
   // ✅ HOOK MOVIDO DENTRO DEL COMPONENTE
   const handleAuditChange = useCallback((snapshot) => {
@@ -61,9 +63,11 @@ export default function DashboardPage() {
   useEffect(() => {
     if (!company) {
       setHighAlerts([]);
+      setFailedAutoAuditLogs([]);
       return;
     }
     refreshAlerts(company.id);
+    loadAutoAuditAlerts(company.id);
   }, [company?.id]);
 
   useEffect(() => {
@@ -136,6 +140,15 @@ export default function DashboardPage() {
     }
   }
 
+  async function loadAutoAuditAlerts(companyId) {
+    try {
+      const logs = await fetchAuditLogs({ companyId, limit: 20 });
+      setFailedAutoAuditLogs((logs ?? []).filter((log) => log.status === 'failed'));
+    } catch (err) {
+      console.error('No se pudieron obtener las alertas de auditoría automática', err);
+    }
+  }
+
   async function loadPlantSummary() {
     if (!company || reportScope !== 'planta') {
       return false;
@@ -195,6 +208,19 @@ export default function DashboardPage() {
             </span>
           }
           onClose={() => setHighAlerts([])}
+        />
+      )}
+
+      {failedAutoAuditLogs.length > 0 && (
+        <Notification
+          type="warning"
+          message={
+            <span>
+              Auditoría automática: {failedAutoAuditLogs.length} indicadores sin evidencia suficiente. Revisa el módulo{' '}
+              <Link to="/auto-audit">Auditoría Automática</Link>.
+            </span>
+          }
+          onClose={() => setFailedAutoAuditLogs([])}
         />
       )}
 
