@@ -1,4 +1,4 @@
-import regulations from '../config/global_regulations.json' assert { type: 'json' };
+import regulations from '../config/global_regulations.json' with { type: 'json' };
 import createError from '../utils/createError.js';
 import { runGeminiPrompt } from './aiService.js';
 import { getCompanyById } from '../repositories/companyRepository.js';

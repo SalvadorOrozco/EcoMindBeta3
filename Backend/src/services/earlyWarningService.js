@@ -1,4 +1,4 @@
-import thresholds from '../config/thresholds.json' assert { type: 'json' };
+import thresholds from '../config/thresholds.json' with { type: 'json' };
 import { getPool } from '../config/db.js';
 import { COLUMNS, TABLES } from '../repositories/metricRepository.js';
 import { listCustomIndicators } from '../repositories/customIndicatorRepository.js';
