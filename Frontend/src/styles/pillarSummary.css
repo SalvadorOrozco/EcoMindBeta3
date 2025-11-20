@@ -1,0 +1,154 @@
+/* === GRID DE 3 COLUMNAS === */
+.pillar-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  width: 100%;
+  align-items: start;
+}
+
+/* === TARJETA DEL PILAR === */
+.pillar-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 28px 32px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  min-height: 100%; /* 🔥 misma altura */
+}
+
+/* === HEADER DE LA TARJETA === */
+.pillar-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.score-chip {
+  background: #0b815a;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+/* === ESTILO DEL PARRAFO BAJO EL TITULO === */
+.pillar-card .muted {
+  margin-top: -10px;
+}
+
+/* === LISTA DE INDICADORES === */
+.pillar-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* === CADA FILA DE INDICADOR === */
+.pillar-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #e8e8e8;
+  width: 100%;
+}
+
+.pillar-row:last-child {
+  border-bottom: none;
+}
+
+/* === LABEL (dt) === */
+.pillar-row dt {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  flex: 1;
+}
+
+/* === VALOR (dd) === */
+.pillar-row dd {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0b3d2e;
+  margin-left: 1.5rem;
+  text-align: right;
+  min-width: 90px; /* 🔥 esto alinea todo perfecto */
+}
+
+/* === BADGE DE OBSERVACIONES === */
+.highlight-badge {
+  margin-left: 8px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.highlight-warning .highlight-badge {
+  background: #fff3cd;
+  color: #664d03;
+}
+
+.highlight-critical .highlight-badge {
+  background: #f8d7da;
+  color: #842029;
+}
+
+.highlight-info .highlight-badge {
+  background: #cff4fc;
+  color: #055160;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 1100px) {
+  .pillar-summary-grid {
+    grid-template-columns: 1fr; /* apilar en móviles */
+  }
+
+  /* ==== GRID INTERNO PARA ALINEAR DATOS ==== */
+.pillar-row {
+  display: grid;
+  grid-template-columns: 1fr auto; /* izquierda y derecha */
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+/* Evita que la última fila tenga línea */
+.pillar-row:last-child {
+  border-bottom: none;
+}
+
+/* ==== LABEL (dt) ==== */
+.pillar-row dt {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+}
+
+/* ==== VALOR (dd) ==== */
+.pillar-row dd {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0d3f2b;
+  margin: 0;
+  text-align: right;
+  min-width: 80px;     /* 🔥 asegura que TODOS los valores ocupen la misma columna */
+}
+
+/* ==== BADGE DE ALERTA SI EXISTE ==== */
+.highlight-badge {
+  margin-left: 8px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;  /* evita saltos raros */
+}
+
+}
