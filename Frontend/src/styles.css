@@ -2957,3 +2957,120 @@ input[type='checkbox'] {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 12px;
 }
+
+.regulatory-page .header-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.forecast-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.forecast-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.impact-badge {
+  padding: 8px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.impact-badge--high,
+.impact-chip--high {
+  background: #f97316;
+  color: #0b0b0b;
+}
+
+.impact-badge--medium,
+.impact-chip--medium {
+  background: #eab308;
+  color: #0b0b0b;
+}
+
+.impact-badge--low,
+.impact-chip--low {
+  background: #34d399;
+  color: #0b0b0b;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.timeline-point {
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeline-point__heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timeline-point__horizon {
+  font-weight: 700;
+}
+
+.timeline-point__bar {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  height: 8px;
+  overflow: hidden;
+}
+
+.timeline-point__fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #f97316);
+}
+
+.timeline-point__meta {
+  display: grid;
+  gap: 4px;
+}
+
+.probability-chip {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: var(--radius-full);
+  background: var(--color-muted);
+  color: var(--color-foreground);
+  font-weight: 600;
+  font-size: 12px;
+  width: fit-content;
+}
+
+.impact-chip {
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  text-transform: capitalize;
+}

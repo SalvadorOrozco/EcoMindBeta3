@@ -344,3 +344,18 @@ CREATE TABLE ESG_Alerts (
 
 CREATE INDEX IX_ESG_Alerts_CompanyPlant
 ON ESG_Alerts (CompanyId, ISNULL(PlantId, 0), RiskLevel);
+
+-- Pronósticos regulatorios
+CREATE TABLE RegulatoryForecasts (
+  Id INT IDENTITY PRIMARY KEY,
+  CompanyId INT NOT NULL,
+  Category NVARCHAR(5) NOT NULL,
+  Region NVARCHAR(120) NOT NULL,
+  ForecastText NVARCHAR(MAX) NOT NULL,
+  Probability DECIMAL(5,4) NOT NULL,
+  ImpactLevel NVARCHAR(10) NOT NULL,
+  DateCreated DATETIME2 NOT NULL DEFAULT SYSDATETIME(),
+  FOREIGN KEY (CompanyId) REFERENCES Empresas(EmpresaID)
+);
+
+CREATE INDEX IX_RegulatoryForecasts_Company ON RegulatoryForecasts (CompanyId, Category, DateCreated DESC);

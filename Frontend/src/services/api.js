@@ -192,6 +192,16 @@ export function buildEvidenceDownloadUrl(id) {
   return `/api/evidencias/${id}/download`;
 }
 
+export async function fetchRegulatoryForecasts(params) {
+  const { data } = await api.get('/regulations/forecast', { params });
+  return data;
+}
+
+export async function generateRegulatoryForecasts(companyId) {
+  const { data } = await api.post('/regulations/generate', null, { params: { companyId } });
+  return data.forecasts;
+}
+
 export async function createCompany(payload) {
   const { data } = await api.post('/companies', payload);
   return data;

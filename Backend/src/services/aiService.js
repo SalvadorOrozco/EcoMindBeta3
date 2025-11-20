@@ -81,6 +81,13 @@ export async function generateRecommendations(context) {
   }
 }
 
+export async function runGeminiPrompt(prompt) {
+  if (!ensureCredentials()) {
+    throw createError(500, 'No se configuró GEMINI_API_KEY para generar el pronóstico');
+  }
+  return callGemini(prompt);
+}
+
 function buildPrompt(context, section, includeAlerts = false) {
   const { company, period, metrics, kpis } = context;
   const lines = [
