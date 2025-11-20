@@ -1,0 +1,8 @@
+{
+  "emisionesCO2": { "upperCritical": 10000, "warningMargin": 0.08 },
+  "energiaKwh": { "upperCritical": 500000, "warningMargin": 0.1 },
+  "cumplimientoNormativo": { "lowerCritical": 80, "warningMargin": 0.05 },
+  "tasaFrecuenciaAccidentes": { "upperCritical": 5, "warningMargin": 0.1 },
+  "indiceSatisfaccion": { "lowerCritical": 70, "warningMargin": 0.1 },
+  "default": { "warningMargin": 0.1 }
+}

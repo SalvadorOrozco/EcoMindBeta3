@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { HiOutlineCloudArrowUp } from 'react-icons/hi2';
 import CompanySelector from '../components/CompanySelector.jsx';
@@ -17,6 +18,7 @@ import {
   fetchCompanyMetrics,
   fetchHistoricalIndicators,
   fetchCompanyPlantReport,
+  recalculateAlerts,
 } from '../services/api.js';
 import { useCompany } from '../context/CompanyContext.jsx';
 
@@ -40,6 +42,7 @@ export default function DashboardPage() {
   const [plantLoading, setPlantLoading] = useState(false);
   const [plantError, setPlantError] = useState(null);
   const [auditSnapshot, setAuditSnapshot] = useState({ findings: [], indicatorSeverity: {}, run: null });
+  const [highAlerts, setHighAlerts] = useState([]);
 
   // ✅ HOOK MOVIDO DENTRO DEL COMPONENTE
   const handleAuditChange = useCallback((snapshot) => {
@@ -54,6 +57,14 @@ export default function DashboardPage() {
     if (!company || !period || reportScope !== 'empresa') return;
     loadData();
   }, [company, period, reportScope]);
+
+  useEffect(() => {
+    if (!company) {
+      setHighAlerts([]);
+      return;
+    }
+    refreshAlerts(company.id);
+  }, [company?.id]);
 
   useEffect(() => {
     if (!company || reportScope !== 'planta') {
@@ -115,6 +126,16 @@ export default function DashboardPage() {
     }
   }
 
+  async function refreshAlerts(companyId) {
+    try {
+      const recalculated = await recalculateAlerts(companyId);
+      const alertsArray = Array.isArray(recalculated) ? recalculated : recalculated?.alerts ?? [];
+      setHighAlerts(alertsArray.filter((alert) => alert.riskLevel === 'high'));
+    } catch (err) {
+      console.error('No se pudieron obtener las alertas predictivas', err);
+    }
+  }
+
   async function loadPlantSummary() {
     if (!company || reportScope !== 'planta') {
       return false;
@@ -163,6 +184,19 @@ export default function DashboardPage() {
       </div>
 
       <CompanySelector />
+
+      {highAlerts.length > 0 && (
+        <Notification
+          type="error"
+          message={
+            <span>
+              Se detectaron {highAlerts.length} alertas de riesgo alto. Revisa el módulo{' '}
+              <Link to="/early-warning">EarlyWarningESG</Link> para ver detalles y tomar acción.
+            </span>
+          }
+          onClose={() => setHighAlerts([])}
+        />
+      )}
 
       {company && <DataIngestionPanel />}
 

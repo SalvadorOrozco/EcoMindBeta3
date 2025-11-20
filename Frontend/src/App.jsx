@@ -10,6 +10,7 @@ import SustainabilityMapPage from './pages/SustainabilityMapPage.jsx';
 import IndicatorsManager from './pages/IndicatorsManager.jsx';
 import PlantsManager from './pages/PlantsManager.jsx';
 import CarbonFootprintPage from './pages/CarbonFootprintPage.jsx';
+import EarlyWarningPage from './pages/EarlyWarningPage.jsx';
 import { useAuth } from './context/AuthContext.jsx';
 
 function ProtectedRoute() {
@@ -43,6 +44,7 @@ export default function App() {
           <Route path="/indicators" element={<IndicatorsManager />} />
           <Route path="/plants" element={<PlantsManager />} />
           <Route path="/carbon" element={<CarbonFootprintPage />} />
+          <Route path="/early-warning" element={<EarlyWarningPage />} />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" replace />} />

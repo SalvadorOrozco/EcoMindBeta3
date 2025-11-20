@@ -295,4 +295,15 @@ export async function simulateCarbonScenario(payload) {
   return data;
 }
 
+export async function fetchAlerts(params) {
+  const { data } = await api.get('/alerts', { params });
+  return data;
+}
+
+export async function recalculateAlerts(companyId) {
+  const params = companyId ? { companyId } : undefined;
+  const { data } = await api.post('/alerts/recalculate', null, { params });
+  return data?.alerts ?? [];
+}
+
 export default api;

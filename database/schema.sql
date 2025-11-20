@@ -326,3 +326,21 @@ CREATE TABLE CarbonReductionScenarios (
 
 CREATE INDEX IX_CarbonReductionScenarios_Snapshot
 ON CarbonReductionScenarios (SnapshotId, Alcance);
+
+-- Alertas predictivas de ESG
+CREATE TABLE ESG_Alerts (
+  Id INT IDENTITY PRIMARY KEY,
+  CompanyId INT NOT NULL,
+  PlantId INT NULL,
+  IndicatorKey NVARCHAR(150) NOT NULL,
+  CurrentValue DECIMAL(18,4) NULL,
+  PredictedValue DECIMAL(18,4) NULL,
+  RiskLevel NVARCHAR(10) NOT NULL,
+  Message NVARCHAR(500) NOT NULL,
+  CreatedAt DATETIME2 NOT NULL DEFAULT SYSDATETIME(),
+  FOREIGN KEY (CompanyId) REFERENCES Empresas(EmpresaID),
+  FOREIGN KEY (PlantId) REFERENCES Plantas(PlantaID)
+);
+
+CREATE INDEX IX_ESG_Alerts_CompanyPlant
+ON ESG_Alerts (CompanyId, ISNULL(PlantId, 0), RiskLevel);
