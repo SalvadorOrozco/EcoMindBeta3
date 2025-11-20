@@ -47,9 +47,11 @@ async function listIndicatorsHandler(req, res) {
 async function createIndicatorHandler(req, res) {
   const companyId = resolveCompanyId(req);
   const payload = validateIndicatorPayload(req.body);
-  const plant = await getPlantByIdAndCompany(payload.plantId, companyId);
-  if (!plant) {
-    throw createError(404, 'La planta seleccionada no existe');
+  if (payload.plantId != null) {
+    const plant = await getPlantByIdAndCompany(payload.plantId, companyId);
+    if (!plant) {
+      throw createError(404, 'La planta seleccionada no existe');
+    }
   }
 
   const indicator = await createCustomIndicator(companyId, payload);

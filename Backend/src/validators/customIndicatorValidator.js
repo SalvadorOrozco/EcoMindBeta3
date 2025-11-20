@@ -6,10 +6,19 @@ const indicatorSchema = z.object({
     .trim()
     .min(3, 'El nombre debe tener al menos 3 caracteres')
     .max(120, 'El nombre no puede superar 120 caracteres'),
-  plantId: z.coerce
-    .number({ invalid_type_error: 'Selecciona una planta válida' })
-    .int('Selecciona una planta válida')
-    .positive('Selecciona una planta válida'),
+  plantId: z
+    .preprocess((value) => {
+      if (value === undefined || value === null || value === '') return null;
+      const number = Number(value);
+      return Number.isNaN(number) ? undefined : number;
+    },
+    z.union([
+      z
+        .number({ invalid_type_error: 'Selecciona una planta válida' })
+        .int('Selecciona una planta válida')
+        .positive('Selecciona una planta válida'),
+      z.null(),
+    ])),
   category: z.enum(['environmental', 'social', 'governance'], {
     errorMap: () => ({ message: 'Categoría inválida' }),
   }),
