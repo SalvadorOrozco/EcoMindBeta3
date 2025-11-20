@@ -198,6 +198,21 @@ export async function deleteEvidence(id) {
   await api.delete(`/evidencias/${id}`);
 }
 
+export async function createCarbonInitiative(payload) {
+  const { data } = await api.post('/carbon/initiatives', payload);
+  return data;
+}
+
+export async function fetchCarbonInitiatives(companyId) {
+  const { data } = await api.get('/carbon/initiatives', { params: { companyId } });
+  return data.initiatives;
+}
+
+export async function fetchCarbonInitiativeRanking(companyId) {
+  const { data } = await api.get('/carbon/initiatives/ranking', { params: { companyId } });
+  return data;
+}
+
 export function buildEvidenceDownloadUrl(id) {
   return `/api/evidencias/${id}/download`;
 }

@@ -376,3 +376,17 @@ CREATE TABLE AuditLogs (
 );
 
 CREATE INDEX IX_AuditLogs_CompanyPlant ON AuditLogs (CompanyId, ISNULL(PlantId, 0), CreatedAt DESC);
+
+-- Retorno ambiental y ROI de carbono
+CREATE TABLE CarbonInitiatives (
+  Id INT IDENTITY PRIMARY KEY,
+  CompanyId INT NOT NULL,
+  Name NVARCHAR(200) NOT NULL,
+  CostUSD DECIMAL(18, 2) NULL,
+  Co2ReductionTons DECIMAL(18, 4) NULL,
+  Description NVARCHAR(500) NULL,
+  CreatedAt DATETIME2 NOT NULL DEFAULT SYSDATETIME(),
+  FOREIGN KEY (CompanyId) REFERENCES Empresas(EmpresaID)
+);
+
+CREATE INDEX IX_CarbonInitiatives_Company ON CarbonInitiatives (CompanyId, CreatedAt DESC);

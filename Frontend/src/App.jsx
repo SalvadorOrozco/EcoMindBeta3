@@ -13,6 +13,7 @@ import CarbonFootprintPage from './pages/CarbonFootprintPage.jsx';
 import EarlyWarningPage from './pages/EarlyWarningPage.jsx';
 import RegulatoryForecastPage from './pages/RegulatoryForecastPage.jsx';
 import AutoAuditPage from './pages/AutoAuditPage.jsx';
+import CarbonRoiPage from './pages/CarbonRoiPage.jsx';
 import { useAuth } from './context/AuthContext.jsx';
 
 function ProtectedRoute() {
@@ -49,6 +50,7 @@ export default function App() {
           <Route path="/auto-audit" element={<AutoAuditPage />} />
           <Route path="/early-warning" element={<EarlyWarningPage />} />
           <Route path="/regulatory-forecast" element={<RegulatoryForecastPage />} />
+          <Route path="/carbon-roi" element={<CarbonRoiPage />} />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" replace />} />

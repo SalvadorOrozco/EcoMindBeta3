@@ -3152,3 +3152,132 @@ input[type='checkbox'] {
   font-weight: 700;
   text-transform: capitalize;
 }
+
+/* Carbon ROI */
+.carbon-roi-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.roi-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.roi-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.roi-form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.roi-form label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 600;
+  color: var(--color-text-subtle);
+}
+
+.roi-form input,
+.roi-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+}
+
+.roi-recommendation {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--color-primary-soft);
+  border: 1px solid var(--color-primary-border);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.25rem;
+}
+
+.roi-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  background: #0f766e;
+  color: #ecfeff;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.roi-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.roi-subtitle {
+  margin: 0.15rem 0 0;
+  color: var(--color-text-subtle);
+}
+
+.roi-table-wrapper {
+  overflow-x: auto;
+}
+
+.initiative-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.initiative-table th,
+.initiative-table td {
+  padding: 0.65rem 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.initiative-table th {
+  font-size: 0.9rem;
+  color: var(--color-text-subtle);
+}
+
+.row-warning {
+  background: #fff7ed;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.tag--warning {
+  background: rgba(245, 158, 11, 0.14);
+  color: #92400e;
+}
+
+.tag--success {
+  background: rgba(17, 176, 118, 0.16);
+  color: #065f46;
+}
+
+.empty-state {
+  color: var(--color-text-subtle);
+  margin: 0.5rem 0;
+}
+
+.chart-wrapper {
+  width: 100%;
+  height: 360px;
+}
