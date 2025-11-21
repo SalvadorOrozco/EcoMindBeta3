@@ -1,0 +1,50 @@
+[
+  {
+    "category": "E",
+    "region": "global",
+    "topic": "Cero emisiones netas",
+    "trend": "Endurecimiento de normas de reportes de carbono y esquemas de precios",
+    "impact": "high",
+    "examples": ["ETS reforzados", "Impuestos al carbono", "Requerimientos de divulgación climática"]
+  },
+  {
+    "category": "E",
+    "region": "LATAM",
+    "topic": "Gestión del agua",
+    "trend": "Mayor fiscalización de consumo, recirculación y descarga de efluentes",
+    "impact": "medium",
+    "examples": ["Límites de extracción", "Planes de reutilización", "Tratamiento avanzado"]
+  },
+  {
+    "category": "S",
+    "region": "global",
+    "topic": "Debida diligencia en derechos humanos",
+    "trend": "Leyes de trazabilidad y condiciones laborales en cadena de suministro",
+    "impact": "high",
+    "examples": ["Debida diligencia obligatoria", "Reglas anti-trabajo forzoso", "Protección a denunciantes"]
+  },
+  {
+    "category": "S",
+    "region": "UE",
+    "topic": "Transparencia salarial y equidad",
+    "trend": "Informes obligatorios de brecha salarial y representación de género",
+    "impact": "medium",
+    "examples": ["Reportes de brecha salarial", "Planes de igualdad", "Metas de diversidad"]
+  },
+  {
+    "category": "G",
+    "region": "global",
+    "topic": "Reporte y gobernanza ESG",
+    "trend": "Convergencia hacia estándares ISSB/ESRS y responsabilidades del directorio",
+    "impact": "high",
+    "examples": ["Informes auditables", "Controles internos ESG", "Responsabilidad fiduciaria"]
+  },
+  {
+    "category": "G",
+    "region": "Norteamérica",
+    "topic": "Anti-corrupción y ciberseguridad",
+    "trend": "Mayores sanciones por soborno y requisitos de resiliencia digital",
+    "impact": "medium",
+    "examples": ["Evaluaciones de riesgos", "Programas de compliance", "Planes de ciberrespuesta"]
+  }
+]

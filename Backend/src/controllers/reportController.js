@@ -17,6 +17,7 @@ import {
   ensureCarbonSnapshot,
   listCarbonFootprintHistory,
 } from '../services/carbonService.js';
+import { buildRoiAnnex } from '../services/carbonRoiService.js';
 
 async function generateReportHandler(req, res) {
   const { empresaId, periodo, alcance = 'empresa', plantaId } = req.body;
@@ -85,12 +86,18 @@ async function generateReportHandler(req, res) {
   ]);
 
   const countryCode = req.body?.countryCode ?? req.body?.pais ?? null;
-  const [historySeries, logo, carbonSnapshot, carbonHistory] = await Promise.all([
+  const [historySeries, logo, carbonSnapshot, carbonHistory, roiAnnex] = await Promise.all([
     getHistoricalSummary(companyId),
     resolveLogoBuffer(req.body, company),
     ensureCarbonSnapshot({ companyId, period: periodo, countryCode }),
     listCarbonFootprintHistory({ companyId, limit: 16 }),
+    buildRoiAnnex(companyId),
   ]);
+
+  const annexes = Array.isArray(req.body?.anexos) ? [...req.body.anexos] : [];
+  if (roiAnnex) {
+    annexes.push(roiAnnex);
+  }
 
   const pdfStream = await buildReportPdf({
     company,
@@ -107,7 +114,7 @@ async function generateReportHandler(req, res) {
       ...req.body?.narrativa,
       evidencias: req.body?.narrativa?.evidencias ?? aiSummary ?? undefined,
     },
-    annexes: Array.isArray(req.body?.anexos) ? req.body.anexos : undefined,
+    annexes: annexes.length ? annexes : undefined,
     aiInsights,
     carbon: carbonSnapshot,
     carbonHistory,

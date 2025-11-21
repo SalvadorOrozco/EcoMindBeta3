@@ -41,7 +41,7 @@ export async function listCustomIndicators(companyId) {
     .query(`
       SELECT i.*, ${plantFields}
       FROM ${TABLE} i
-      INNER JOIN Plantas p ON i.PlantaID = p.PlantaID AND p.EmpresaID = i.EmpresaID
+      LEFT JOIN Plantas p ON i.PlantaID = p.PlantaID AND p.EmpresaID = i.EmpresaID
       WHERE i.EmpresaID = @EmpresaID
       ORDER BY FechaCreacion DESC, Id DESC
     `);
@@ -57,7 +57,7 @@ export async function listIndicatorsByPlant(companyId, plantId) {
     .query(`
       SELECT i.*, ${plantFields}
       FROM ${TABLE} i
-      INNER JOIN Plantas p ON i.PlantaID = p.PlantaID AND p.EmpresaID = i.EmpresaID
+      LEFT JOIN Plantas p ON i.PlantaID = p.PlantaID AND p.EmpresaID = i.EmpresaID
       WHERE i.EmpresaID = @EmpresaID AND i.PlantaID = @PlantaID
       ORDER BY FechaCreacion DESC, Id DESC
     `);
@@ -72,7 +72,7 @@ export async function listIndicatorsGroupedByPlant(companyId) {
     .query(`
       SELECT i.*, ${plantFields}
       FROM ${TABLE} i
-      INNER JOIN Plantas p ON i.PlantaID = p.PlantaID AND p.EmpresaID = i.EmpresaID
+      LEFT JOIN Plantas p ON i.PlantaID = p.PlantaID AND p.EmpresaID = i.EmpresaID
       WHERE i.EmpresaID = @EmpresaID
       ORDER BY p.Nombre, FechaCreacion DESC, Id DESC
     `);
@@ -83,7 +83,7 @@ export async function createCustomIndicator(companyId, payload) {
   const pool = await getPool();
   const request = pool.request();
   request.input('EmpresaID', companyId);
-  request.input('PlantaID', payload.plantId);
+  request.input('PlantaID', payload.plantId ?? null);
   request.input('Nombre', payload.name);
   request.input('Categoria', payload.category);
   request.input('Valor', payload.value);
@@ -113,7 +113,7 @@ export async function getCustomIndicatorById(indicatorId) {
     .query(`
       SELECT i.*, ${plantFields}
       FROM ${TABLE} i
-      INNER JOIN Plantas p ON i.PlantaID = p.PlantaID AND p.EmpresaID = i.EmpresaID
+      LEFT JOIN Plantas p ON i.PlantaID = p.PlantaID AND p.EmpresaID = i.EmpresaID
       WHERE i.Id = @Id
     `);
   return mapIndicator(result.recordset[0]);

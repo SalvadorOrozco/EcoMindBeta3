@@ -19,6 +19,8 @@ import aiRoutes from './routes/aiRoutes.js';
 import ingestionRoutes from './routes/ingestionRoutes.js';
 import auditRoutes from './routes/auditRoutes.js';
 import carbonRoutes from './routes/carbonRoutes.js';
+import alertRoutes from './routes/alertRoutes.js';
+import regulationRoutes from './routes/regulationRoutes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -53,6 +55,8 @@ app.use('/api/ai', aiRoutes);
 app.use('/api/ingestion', ingestionRoutes);
 app.use('/api/audit', auditRoutes);
 app.use('/api/carbon', carbonRoutes);
+app.use('/api/alerts', alertRoutes);
+app.use('/api/regulations', regulationRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

@@ -160,6 +160,16 @@ export async function runEsgAuditRequest(payload) {
   return data;
 }
 
+export async function runAutoAudit(companyId) {
+  const { data } = await api.post('/audit/run', null, { params: { companyId, mode: 'auto' } });
+  return data;
+}
+
+export async function fetchAuditLogs(params) {
+  const { data } = await api.get('/audit/logs', { params });
+  return data.logs;
+}
+
 export async function fetchAuditRuns(params) {
   const { data } = await api.get('/audit/runs', { params });
   return data.runs;
@@ -188,8 +198,33 @@ export async function deleteEvidence(id) {
   await api.delete(`/evidencias/${id}`);
 }
 
+export async function createCarbonInitiative(payload) {
+  const { data } = await api.post('/carbon/initiatives', payload);
+  return data;
+}
+
+export async function fetchCarbonInitiatives(companyId) {
+  const { data } = await api.get('/carbon/initiatives', { params: { companyId } });
+  return data.initiatives;
+}
+
+export async function fetchCarbonInitiativeRanking(companyId) {
+  const { data } = await api.get('/carbon/initiatives/ranking', { params: { companyId } });
+  return data;
+}
+
 export function buildEvidenceDownloadUrl(id) {
   return `/api/evidencias/${id}/download`;
+}
+
+export async function fetchRegulatoryForecasts(params) {
+  const { data } = await api.get('/regulations/forecast', { params });
+  return data;
+}
+
+export async function generateRegulatoryForecasts(companyId) {
+  const { data } = await api.post('/regulations/generate', null, { params: { companyId } });
+  return data.forecasts;
 }
 
 export async function createCompany(payload) {
@@ -293,6 +328,17 @@ export async function calculateCarbonFootprint(payload) {
 export async function simulateCarbonScenario(payload) {
   const { data } = await api.post('/carbon/simulate', payload);
   return data;
+}
+
+export async function fetchAlerts(params) {
+  const { data } = await api.get('/alerts', { params });
+  return data;
+}
+
+export async function recalculateAlerts(companyId) {
+  const params = companyId ? { companyId } : undefined;
+  const { data } = await api.post('/alerts/recalculate', null, { params });
+  return data?.alerts ?? [];
 }
 
 export default api;

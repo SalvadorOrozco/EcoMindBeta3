@@ -326,3 +326,67 @@ CREATE TABLE CarbonReductionScenarios (
 
 CREATE INDEX IX_CarbonReductionScenarios_Snapshot
 ON CarbonReductionScenarios (SnapshotId, Alcance);
+
+-- Alertas predictivas de ESG
+CREATE TABLE ESG_Alerts (
+  Id INT IDENTITY PRIMARY KEY,
+  CompanyId INT NOT NULL,
+  PlantId INT NULL,
+  IndicatorKey NVARCHAR(150) NOT NULL,
+  CurrentValue DECIMAL(18,4) NULL,
+  PredictedValue DECIMAL(18,4) NULL,
+  RiskLevel NVARCHAR(10) NOT NULL,
+  Message NVARCHAR(500) NOT NULL,
+  CreatedAt DATETIME2 NOT NULL DEFAULT SYSDATETIME(),
+  FOREIGN KEY (CompanyId) REFERENCES Empresas(EmpresaID),
+  FOREIGN KEY (PlantId) REFERENCES Plantas(PlantaID)
+);
+
+CREATE INDEX IX_ESG_Alerts_CompanyPlant
+ON ESG_Alerts (CompanyId, ISNULL(PlantId, 0), RiskLevel);
+
+-- Pronósticos regulatorios
+CREATE TABLE RegulatoryForecasts (
+  Id INT IDENTITY PRIMARY KEY,
+  CompanyId INT NOT NULL,
+  Category NVARCHAR(5) NOT NULL,
+  Region NVARCHAR(120) NOT NULL,
+  ForecastText NVARCHAR(MAX) NOT NULL,
+  Probability DECIMAL(5,4) NOT NULL,
+  ImpactLevel NVARCHAR(10) NOT NULL,
+  DateCreated DATETIME2 NOT NULL DEFAULT SYSDATETIME(),
+  FOREIGN KEY (CompanyId) REFERENCES Empresas(EmpresaID)
+);
+
+CREATE INDEX IX_RegulatoryForecasts_Company ON RegulatoryForecasts (CompanyId, Category, DateCreated DESC);
+
+-- Auditoría automática de indicadores vs evidencias
+CREATE TABLE AuditLogs (
+  Id INT IDENTITY PRIMARY KEY,
+  CompanyId INT NOT NULL,
+  PlantId INT NULL,
+  IndicatorId INT NULL,
+  IndicatorKey NVARCHAR(150) NULL,
+  Status NVARCHAR(20) NOT NULL,
+  Message NVARCHAR(MAX) NULL,
+  Confidence INT NULL,
+  CreatedAt DATETIME2 NOT NULL DEFAULT SYSDATETIME(),
+  FOREIGN KEY (CompanyId) REFERENCES Empresas(EmpresaID),
+  FOREIGN KEY (PlantId) REFERENCES Plantas(PlantaID)
+);
+
+CREATE INDEX IX_AuditLogs_CompanyPlant ON AuditLogs (CompanyId, ISNULL(PlantId, 0), CreatedAt DESC);
+
+-- Retorno ambiental y ROI de carbono
+CREATE TABLE CarbonInitiatives (
+  Id INT IDENTITY PRIMARY KEY,
+  CompanyId INT NOT NULL,
+  Name NVARCHAR(200) NOT NULL,
+  CostUSD DECIMAL(18, 2) NULL,
+  Co2ReductionTons DECIMAL(18, 4) NULL,
+  Description NVARCHAR(500) NULL,
+  CreatedAt DATETIME2 NOT NULL DEFAULT SYSDATETIME(),
+  FOREIGN KEY (CompanyId) REFERENCES Empresas(EmpresaID)
+);
+
+CREATE INDEX IX_CarbonInitiatives_Company ON CarbonInitiatives (CompanyId, CreatedAt DESC);
