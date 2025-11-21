@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import ThemeToggle from '../components/ThemeToggle.jsx';
@@ -17,6 +17,9 @@ export default function LoginPage({ initialMode = 'login' }) {
   });
   const [error, setError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const loginRef = useRef(null);
+  const registerRef = useRef(null);
+  const [panelHeight, setPanelHeight] = useState('auto');
 
   const isLogin = useMemo(() => mode === 'login', [mode]);
 
@@ -29,6 +32,13 @@ export default function LoginPage({ initialMode = 'login' }) {
   useEffect(() => {
     setMode(initialMode);
   }, [initialMode]);
+
+  useEffect(() => {
+    const activeNode = isLogin ? loginRef.current : registerRef.current;
+    if (activeNode) {
+      setPanelHeight(`${activeNode.offsetHeight}px`);
+    }
+  }, [isLogin, loginForm, registerForm]);
 
   function handleLoginChange(event) {
     const { name, value } = event.target;
@@ -126,8 +136,14 @@ export default function LoginPage({ initialMode = 'login' }) {
             <span className={`auth-toggle__indicator ${isLogin ? 'left' : 'right'}`} aria-hidden />
           </div>
           {error && <div className="auth-error">{error}</div>}
-          <div className="auth-panels" data-mode={mode}>
-            <form className="auth-panel" onSubmit={handleLoginSubmit} aria-hidden={!isLogin}>
+          <div className="auth-panels" data-mode={mode} style={{ height: panelHeight }}>
+            <form
+              className={`auth-panel ${isLogin ? 'is-active' : ''}`}
+              onSubmit={handleLoginSubmit}
+              aria-hidden={!isLogin}
+              hidden={!isLogin}
+              ref={loginRef}
+            >
               <h2>Iniciar sesión</h2>
               <p className="auth-subtitle">Ingresa con tu correo corporativo para continuar.</p>
               <div className="form-field">
@@ -167,7 +183,13 @@ export default function LoginPage({ initialMode = 'login' }) {
               </p>
             </form>
 
-            <form className="auth-panel" onSubmit={handleRegisterSubmit} aria-hidden={isLogin}>
+            <form
+              className={`auth-panel ${!isLogin ? 'is-active' : ''}`}
+              onSubmit={handleRegisterSubmit}
+              aria-hidden={isLogin}
+              hidden={isLogin}
+              ref={registerRef}
+            >
               <h2>Crear cuenta</h2>
               <p className="auth-subtitle">Completa los datos para obtener acceso inmediato.</p>
               <div className="form-field">

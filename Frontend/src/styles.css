@@ -2261,23 +2261,25 @@ input[type='checkbox'] {
   width: 100%;
 }
 
+
 .auth-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(2rem, 1.5rem + 2vw, 4rem);
+  padding: clamp(2.5rem, 1.5rem + 2.5vw, 4.5rem);
   background: radial-gradient(circle at 10% 20%, rgba(73, 162, 255, 0.08), transparent 25%),
     radial-gradient(circle at 90% 10%, rgba(122, 237, 185, 0.08), transparent 20%),
     var(--color-app-bg);
+  overflow-x: hidden;
 }
 
 .auth-shell {
-  width: min(1200px, 100%);
+  width: min(1180px, 100%);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-  gap: 2rem;
-  align-items: center;
+  grid-template-columns: minmax(340px, 1.1fr) minmax(360px, 0.9fr);
+  gap: 2.25rem;
+  align-items: start;
 }
 
 .auth-page__actions {
@@ -2308,16 +2310,16 @@ input[type='checkbox'] {
 }
 
 .auth-card {
-  background: var(--color-surface);
+  background: #ffffff;
   border-radius: var(--radius-lg);
   padding: clamp(2rem, 1.5rem + 1.5vw, 2.75rem);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 20px 45px rgba(17, 24, 39, 0.12);
   border: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  backdrop-filter: blur(18px) saturate(120%);
   position: relative;
+  color: var(--color-text);
 }
 
 .auth-card--slider {
@@ -2356,7 +2358,8 @@ input[type='checkbox'] {
   width: calc(50% - 4px);
   background: linear-gradient(135deg, var(--color-primary), var(--color-primary-strong));
   border-radius: var(--radius-full);
-  transition: transform 0.35s ease;
+  transition: transform 0.3s ease;
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.15);
 }
 
 .auth-toggle__indicator.left {
@@ -2368,31 +2371,37 @@ input[type='checkbox'] {
 }
 
 .auth-panels {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(320px, 1fr));
-  width: 200%;
-  transition: transform 0.45s ease;
-  gap: 1.5rem;
-}
-
-.auth-panels[data-mode='login'] {
-  transform: translateX(0%);
-}
-
-.auth-panels[data-mode='register'] {
-  transform: translateX(-50%);
+  position: relative;
+  width: 100%;
+  transition: height 0.3s ease;
 }
 
 .auth-panel {
   padding-top: 0.5rem;
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 1rem;
+  align-content: start;
+  animation: fade-in 0.25s ease;
+}
+
+.auth-panel[hidden] {
+  display: none;
 }
 
 .auth-subtitle {
   margin: 0;
   color: var(--color-text-subtle);
+}
+
+.auth-card .primary-button {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-strong));
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 10px 30px rgba(52, 199, 89, 0.2);
+}
+
+.auth-card .primary-button:hover {
+  filter: brightness(0.98);
 }
 
 .auth-error {
@@ -2792,8 +2801,29 @@ input[type='checkbox'] {
 
     .map-company-list {
       max-height: none;
-    }
   }
+}
+
+@media (max-width: 1024px) {
+  .auth-shell {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .auth-card {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .auth-hero {
+    order: 2;
+    text-align: center;
+  }
+
+  .auth-hero ul {
+    text-align: left;
+  }
+}
 
 @media (max-width: 520px) {
     .topbar__actions {
@@ -2829,10 +2859,11 @@ input[type='checkbox'] {
 
     .auth-shell {
       grid-template-columns: 1fr;
+      align-items: start;
     }
 
     .auth-panels {
-      grid-template-columns: repeat(2, 100%);
+      height: auto !important;
     }
 
     .auth-page__actions {
